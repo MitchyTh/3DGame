@@ -16,6 +16,8 @@ public class SimpleFirstPersonController : MonoBehaviour
     private Vector3 velocity; // This will store the velocity for gravity and jumping
     private Camera camera;
 
+    public GameObject wall_1;
+    public GameObject wall_2;
     void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -67,5 +69,13 @@ public class SimpleFirstPersonController : MonoBehaviour
 
         // Apply movement and gravity
         characterController.Move((moveDirection + velocity) * Time.deltaTime);
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Walls"))
+        {
+            Debug.Log("Hit");
+        }
     }
 }

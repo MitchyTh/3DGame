@@ -54,6 +54,7 @@ MonoBehaviour:
   lookSpeedY: 2
   jumpForce: 5
   gravity: -9.8
+  pushForce: 5
 --- !u!65 &4541204199610529371
 BoxCollider:
   m_ObjectHideFlags: 0

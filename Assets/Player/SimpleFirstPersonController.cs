@@ -7,23 +7,24 @@ public class SimpleFirstPersonController : MonoBehaviour
     public float lookSpeedY = 2f; // Mouse Y rotation speed
     public float jumpForce = 5f; // Jump height
     public float gravity = -9.8f; // Gravity force
+    public float pushForce = 0;
+    private Vector3 pushDirection = Vector3.zero;
 
     private float rotationX = 0f; // Rotation on the X-axis (up/down)
-    private float rotationY = 0f; // Rotation on the Y-axis (left/right)
+    private float rotationY = -180f; // Rotation on the Y-axis (left/right)
     private CharacterController characterController;
 
     private Vector3 moveDirection = Vector3.zero;
     private Vector3 velocity; // This will store the velocity for gravity and jumping
     private Camera camera;
 
-    public GameObject wall_1;
-    public GameObject wall_2;
     void Start()
     {
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked; // Lock the cursor to the center of the screen
         Cursor.visible = false; // Hide the cursor
         camera = GetComponentInChildren<Camera>();
+        transform.rotation = Quaternion.Euler(0, -180, 0);
     }
 
     void Update()
@@ -67,15 +68,29 @@ public class SimpleFirstPersonController : MonoBehaviour
             velocity.y += gravity * Time.deltaTime; // Apply gravity if not grounded
         }
 
-        // Apply movement and gravity
-        characterController.Move((moveDirection + velocity) * Time.deltaTime);
+        if (pushDirection != Vector3.zero)
+        {
+            characterController.Move(pushDirection * Time.deltaTime);
+            pushDirection = Vector3.Lerp(pushDirection, Vector3.zero, 5f * Time.deltaTime); // Smooth stop
+        }
+    
+
+    // Apply movement and gravity
+    characterController.Move((moveDirection + velocity) * Time.deltaTime);
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.CompareTag("Walls"))
+        if (hit.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("Hit");
+            Rigidbody body = hit.collider.attachedRigidbody;
+
+            if (body != null && !body.isKinematic)
+            {
+                Vector3 pushDir = hit.moveDirection;
+                pushDirection = pushDir * pushForce;
+            }
         }
     }
+     
 }

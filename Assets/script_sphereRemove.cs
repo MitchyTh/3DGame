@@ -17,4 +17,12 @@ public class script_sphereRemove : MonoBehaviour
             timer = 0;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

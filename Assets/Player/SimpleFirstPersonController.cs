@@ -47,9 +47,22 @@ public class SimpleFirstPersonController : MonoBehaviour
         // Movement Input (WASD)
         float moveDirectionX = Input.GetAxis("Horizontal"); // A/D (left/right)
         float moveDirectionZ = Input.GetAxis("Vertical"); // W/S (forward/backward)
-
         Vector3 move = transform.right * moveDirectionX + transform.forward * moveDirectionZ;
-        moveDirection = move * moveSpeed;
+
+        if (pushDirection == Vector3.zero)
+        {
+            moveDirection = move * moveSpeed;
+        }
+
+        if (pushDirection.magnitude > 0.8f)
+        {
+            characterController.Move((pushDirection + velocity) * Time.deltaTime);
+            pushDirection = Vector3.Lerp(pushDirection, Vector3.zero, 2.5f * Time.deltaTime); // Smooth stop
+        }
+        else
+        {
+            pushDirection = Vector3.zero;
+        }
 
         // Jumping
         if (characterController.isGrounded)
@@ -68,11 +81,7 @@ public class SimpleFirstPersonController : MonoBehaviour
             velocity.y += gravity * Time.deltaTime; // Apply gravity if not grounded
         }
 
-        if (pushDirection != Vector3.zero)
-        {
-            characterController.Move(pushDirection * Time.deltaTime);
-            pushDirection = Vector3.Lerp(pushDirection, Vector3.zero, 5f * Time.deltaTime); // Smooth stop
-        }
+        
     
 
     // Apply movement and gravity
@@ -87,7 +96,7 @@ public class SimpleFirstPersonController : MonoBehaviour
 
             if (body != null && !body.isKinematic)
             {
-                Vector3 pushDir = hit.moveDirection;
+                Vector3 pushDir = -hit.moveDirection.normalized;
                 pushDirection = pushDir * pushForce;
             }
         }

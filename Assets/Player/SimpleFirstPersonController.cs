@@ -1,3 +1,5 @@
+using System.Threading;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class SimpleFirstPersonController : MonoBehaviour
@@ -9,6 +11,8 @@ public class SimpleFirstPersonController : MonoBehaviour
     public float gravity = -9.8f; // Gravity force
     public float pushForce = 0;
     private Vector3 pushDirection = Vector3.zero;
+    public float resetTime = 0.5f;
+    private float timer = 0;
 
     private float rotationX = 0f; // Rotation on the X-axis (up/down)
     private float rotationY = -180f; // Rotation on the Y-axis (left/right)
@@ -56,12 +60,22 @@ public class SimpleFirstPersonController : MonoBehaviour
 
         if (pushDirection.magnitude > 0.8f)
         {
-            characterController.Move((pushDirection + velocity) * Time.deltaTime);
-            pushDirection = Vector3.Lerp(pushDirection, Vector3.zero, 2.5f * Time.deltaTime); // Smooth stop
+            characterController.Move((pushDirection) * Time.deltaTime);
+
+            timer = resetTime;
+            
         }
-        else
+
+        // If the timer is greater than 0, decrease it
+        if (timer > 0f)
         {
-            pushDirection = Vector3.zero;
+            timer -= Time.deltaTime;
+        }
+
+        // Reset pushDirection after the set time 
+        if (timer <= 0f)
+        {
+            pushDirection = Vector3.zero;   
         }
 
         // Jumping

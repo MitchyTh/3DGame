@@ -2120,7 +2120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wall_1: {fileID: 1947671857}
   wall_2: {fileID: 363099441}
-  wallCloseSpeed: 0.2
+  wallCloseSpeed: 0.13
   player: {fileID: 1237751197}
 --- !u!1 &507826454
 GameObject:
@@ -2364,19 +2364,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 861010202963860477, guid: 070095bfedf139b42979536db6a4f68e, type: 3}
       propertyPath: pushForce
-      value: 15
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2753722846259439681, guid: 070095bfedf139b42979536db6a4f68e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.18
+      value: 1.15
       objectReference: {fileID: 0}
     - target: {fileID: 2753722846259439681, guid: 070095bfedf139b42979536db6a4f68e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.99
+      value: 9.374
       objectReference: {fileID: 0}
     - target: {fileID: 2753722846259439681, guid: 070095bfedf139b42979536db6a4f68e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 46.72
+      value: -7.431
       objectReference: {fileID: 0}
     - target: {fileID: 2753722846259439681, guid: 070095bfedf139b42979536db6a4f68e, type: 3}
       propertyPath: m_LocalRotation.w

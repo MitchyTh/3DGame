@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Script_WallContact : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Script_WallContact : MonoBehaviour
     private bool isColliding1 = false, isColliding2 = false;
     CharacterController controller;
     public GameObject wall1, wall2;
+
+    public timer_script timer_Script;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -49,11 +52,15 @@ public class Script_WallContact : MonoBehaviour
             {
                 isColliding1 = true;
                 Debug.Log("Touches Wall1");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                timer_Script.resetText();
             }
             if (hit.gameObject == wall2)
             {
                 isColliding2 = true;
                 Debug.Log("Touches Wall2");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                timer_Script.resetText();
             }
 
             if (!touchedWalls.Contains(hit.gameObject))

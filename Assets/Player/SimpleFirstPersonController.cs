@@ -1,5 +1,4 @@
 using System.Threading;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class SimpleFirstPersonController : MonoBehaviour
@@ -58,24 +57,12 @@ public class SimpleFirstPersonController : MonoBehaviour
             moveDirection = move * moveSpeed;
         }
 
-        if (pushDirection.magnitude > 0.8f)
+        if (pushDirection.magnitude > 1f)
         {
             characterController.Move((pushDirection) * Time.deltaTime);
 
             timer = resetTime;
             
-        }
-
-        // If the timer is greater than 0, decrease it
-        if (timer > 0f)
-        {
-            timer -= Time.deltaTime;
-        }
-
-        // Reset pushDirection after the set time 
-        if (timer <= 0f)
-        {
-            pushDirection = Vector3.zero;   
         }
 
         // Jumping
